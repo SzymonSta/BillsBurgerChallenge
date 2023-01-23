@@ -131,10 +131,6 @@ class Drink extends Meal{
     private String size;
     private double price;
 
-    public Void setPrice(){
-        price = Coke.getPrice();
-    }
-
     public Drink() {
         System.out.println("Default drink");
     }
@@ -152,7 +148,7 @@ class Drink extends Meal{
     public double getPrice() {
         return price;
     }
-    public Drink drinkMaker(String type, String size) {
+    public Meal drinkMaker(String type, String size) {
         return switch (type){
             case "Coke", "coke" -> new Coke(size);
             case "Juice", "juice" -> new Juice(size);
@@ -197,9 +193,9 @@ class Coke extends Meal{
     private double price;
 
     public Coke(String size) {
-        super("Coke", size, price = drinkPrice(size));
-        price = drinkPrice(size);
+        this.size = size;
     }
+
     public double getPrice() {
         return price;
     }
