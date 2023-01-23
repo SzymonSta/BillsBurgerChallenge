@@ -10,19 +10,35 @@ class Meal {
         System.out.println("prize: " + price);
     }
 
+    public double getPrice() {
+        return price;
+    }
 
     public static void mealCreator(String  burger, String drink, String size, String sideItem) {
-        Burger burger1 = new Burger(burger);
-        Drink drink1 = new Drink(drink, size);
-        SideItem sideItem1 = new SideItem(sideItem);
+        Meal burger1 = switch (burger){
+            case "Hamburger" -> new HamBurger();
+            case "Delux" -> new DeluxBurger();
+            case "Cheeseburger" -> new CheeseBurger();
+            default -> new Burger();
+        };
+        Meal drink1 = switch (drink){
+            case "Coke", "coke" -> new Coke(size);
+            case "Juice", "juice" -> new Juice(size);
+            case "Coffee", "coffee" ->new Coffee(size);
+            default -> new Drink();
+        };
+       Meal sideItem1 = new SideItem(sideItem);
 
         System.out.println("yours mela: " + burger1.getClass().getSimpleName() + " " +
                 drink1.getClass().getSimpleName() + " " +
                 sideItem1.getClass().getSimpleName());
-        System.out.println("total cost of the meal = " + burger1.getPrice() + drink1.getPrice() +
-                sideItem1.getPrice());
+        System.out.println("total cost of the meal = " + (burger1.getPrice() + drink1.getPrice() +
+                sideItem1.getPrice()));
     }
-    public double burgerAdderMaker(int extraToppings, double prize) {
+
+    public double totalPrice = 0;
+
+    public double burgerAdderMaker(int extraToppings, double price) {
 
         String extraTopping;
         for (int i = extraToppings; i > 0; i--) {
@@ -32,12 +48,12 @@ class Meal {
             Scanner s = new Scanner(System.in);
             extraTopping = s.nextLine();
             switch (extraTopping) {
-                case "A", "a", "E", "e", "F", "f" -> prize += 1.5;
-                case "B", "b", "C", "c", "G", "g" -> prize += 2.2;
-                case "D", "d" -> prize += 3.5;
+                case "A", "a", "E", "e", "F", "f" -> price += 1.5;
+                case "B", "b", "C", "c", "G", "g" -> price += 2.2;
+                case "D", "d" -> price += 3.5;
             }
         }
-        return prize;
+        return price;
     }
 
 }
@@ -67,8 +83,8 @@ class Burger extends Meal{
     }
 
     @Override
-    public double burgerAdderMaker(int extraToppings, double prize) {
-        return super.burgerAdderMaker(extraToppings, prize);
+    public double burgerAdderMaker(int extraToppings, double price) {
+        return super.burgerAdderMaker(extraToppings, price);
     }
 }
 
@@ -95,7 +111,7 @@ class DeluxBurger extends Meal{
     private int extraToppings;
 
     public DeluxBurger() {
-        type = "Cheeseburger";
+        type = "DeLux Burger";
         price = 25.5 + burgerAdderMaker(extraToppings, price);
         extraToppings = 5;
     }
@@ -121,8 +137,8 @@ class HamBurger extends Meal{
         return price;
     }
     @Override
-    public double burgerAdderMaker(int extraToppings, double prize) {
-        return super.burgerAdderMaker(extraToppings, prize);
+    public double burgerAdderMaker(int extraToppings, double price) {
+        return super.burgerAdderMaker(extraToppings, price);
     }
 }
 
@@ -193,7 +209,7 @@ class Coke extends Meal{
     private double price;
 
     public Coke(String size) {
-        this.size = size;
+        price = drinkPrice(size);
     }
 
     public double getPrice() {
