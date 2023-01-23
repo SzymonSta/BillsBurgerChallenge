@@ -59,28 +59,15 @@ class Meal {
 }
 class Burger extends Meal{
 
-    private String type;
-    private double price;
-    private int extraToppings;
+//    private String type;
+//    private double price;
+//    private int extraToppings;
 
     public Burger() {
     }
-
-    public Burger(String type) {
-        burgerMaker(type);
-    }
-
-    public Meal burgerMaker(String type){
-        return switch(type){
-            case "Hamburger" -> new HamBurger();
-            case "Delux" -> new DeluxBurger();
-            case "Cheeseburger" -> new CheeseBurger();
-            default -> new Burger();
-        };
-    }
-    public double getPrice() {
-        return price;
-    }
+//    public double getPrice() {
+//        return price;
+//    }
 
     @Override
     public double burgerAdderMaker(int extraToppings, double price) {
